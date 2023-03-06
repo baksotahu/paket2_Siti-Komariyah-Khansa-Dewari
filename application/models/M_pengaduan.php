@@ -3,6 +3,7 @@ class M_pengaduan extends CI_Model {
     public function getAllPengaduan(){
         $this->db->order_by('id_pengaduan', 'DESC');
         // var_dump($this->db->get('tbl_pengaduan')->result());die;
+        $this->db->join('tbl_masyarakat', 'tbl_masyarakat.nik=tbl_pengaduan.nik');
         return $this->db->get('tbl_pengaduan')->result();
     }
 

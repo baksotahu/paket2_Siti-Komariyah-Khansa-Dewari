@@ -9,6 +9,7 @@ class Admin extends CI_Controller
 	{
 		parent::__construct();
 		cek_admin_all_level();
+		$this->load->model('M_master');
 		$this->load->model('M_admin');
 		$this->load->model('M_pengaduan');
 	}
@@ -26,6 +27,50 @@ class Admin extends CI_Controller
 		$this->load->view('admin/index', $data);
 		$this->load->view('templates/footer');
 	}
+
+		// Untuk Menambahkan Data Admin / Admin
+		public function add_admin()
+		{
+			$data['title'] = 'Tambah Data Admin';
+			$data['pengguna'] = $this->db->get_where('tbl_admin', ['username' => $this->session->userdata('username')])->row_array();
+	
+			$this->form_validation->set_rules('nama', 'Nama', 'required|trim|min_length[3]', [
+				'required' => 'Nama harus di isi',
+				'min_length' => 'Nama min 3 huruf'
+			]);
+			$this->form_validation->set_rules('telp', 'No telp', 'required|trim|min_length[11]|max_length[13]|is_unique[tbl_admin.no_telp]|numeric', [
+				'required' => 'No Telp harus di isi',
+				'min_length' => 'No Telp min 11 angka',
+				'max_length' => 'No Telp max 13 angka',
+				'is_unique' => 'No Telp sudah terdaftar',
+				'numeric' => 'No Telp harus angka'
+			]);
+			$this->form_validation->set_rules('username', 'Username', 'required|trim|min_length[5]|is_unique[tbl_admin.username]', [
+				'required' => 'Username harus di isi',
+				'min_length' => 'Username min 5 karakter',
+				'is_unique' => 'Username sudah terdaftar'
+			]);
+			$this->form_validation->set_rules('password', 'Password', 'required|trim|min_length[5]|matches[repassword]', [
+				'required' => 'Password harus di isi',
+				'min_length' => 'Password min 5 karakter',
+				'matches' => 'Password harus sama dengan Ulangi Password'
+			]);
+			$this->form_validation->set_rules('repassword', 'Ulangi Password', 'required|trim|matches[password]', [
+				'required' => 'Ulangi Password harus di isi',
+				'matches' => 'Ulangi Password harus sama dengan Password'
+			]);
+			$this->form_validation->set_rules('level', 'Level', 'required', ['required' => 'Harap pilih salah satu']);
+	
+			if ($this->form_validation->run() == false) {
+				$this->load->view('templates/header', $data);
+				$this->load->view('templates/sidebar');
+				$this->load->view('templates/topbar', $data);
+				$this->load->view('admin/add');
+				$this->load->view('templates/footer');
+			} else {
+				$this->M_master->add_admin();
+			}
+		}
 
 	public function tes() {
 		$data['pengaduan'] = $this->db->get('tbl_pengaduan')->result();
@@ -77,7 +122,6 @@ class Admin extends CI_Controller
 	{
 		$data['title'] = 'Edit Password';
 		$data['pengguna'] = $this->db->get_where('tbl_admin', ['username' => $this->session->userdata('username')])->row_array();
-
 		$this->form_validation->set_rules('pl', 'pl', 'required|trim', ['required' => 'Password lama harus di si']);
 		$this->form_validation->set_rules('pb', 'pb', 'required|trim|min_length[5]|matches[kpb]', [
 			'required' => 'Password baru harus di isi',

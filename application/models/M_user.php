@@ -2,6 +2,11 @@
 class M_user extends CI_Model
 {
 
+    public function getAllPengguna()
+    {
+        $this->db->get('tbl_admin')->result();
+    }
+
     public function getLaporanByNIK()
     {
         $nik = $this->session->userdata('nik');

@@ -27,14 +27,7 @@
 								<h1 class="h4 text-gray-900 mb-4">Aplikasi Pelaporan Pengaduan Masyarakt</h1> <!-- judul -->
 							</div>
 
-						<?php if ($this->session->flashdata('false')) : ?>
-							<div class="alert alert-danger alert-dismissible fade show" role="alert">
-								<?= $this->session->flashdata('false'); ?>
-								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-								</button>
-							</div>
-						<?php endif; ?>
+						<?= $this->session->flashdata('message') ; ?>
 
 						<form action="<?= base_url('auth/register'); ?>" method="post">
 

@@ -9,13 +9,16 @@
 				<div class="alert alert-warning">
 					<strong>Note : </strong> Jika anda menghapus data masyarakat maka data pengaduan dan data tanggapan dengan NIK yang sama akan ikut terhapus.
 				</div>
-        			<div class="card shadow">
-        				<div class="card-body">
+				
+				<div class="card shadow">
+					<div class="card-body">
+							<a href="<?= base_url('master/add_masyarakat'); ?>" class="btn btn-primary mb-3"><i class="fa fa-plus"></i> Tambah Data Masyarakat</a>
         					<table class="table table-striped table-bordered" id="myTable">
         						<thead class="table-info">
         							<tr>
         								<th>No</th>
         								<th>Nama</th>
+										<th>Username</th>
         								<th>NIK</th>
         								<th>Status</th>
         								<th>Aksi</th>
@@ -28,6 +31,7 @@
         								<tr>
         									<td><?= $i++; ?></td>
         									<td><?= $m->nama; ?></td>
+											<td><?= $m->username?></td>
         									<td><?= $m->nik; ?></td>
         									<td>
         										<?php if($m->aktif == 1):?>

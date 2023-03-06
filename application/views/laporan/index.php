@@ -20,7 +20,20 @@
                     <p><?= $l->isi_laporan; ?></p>
                     <small class="text-muted"><?php date_default_timezone_set('Asia/Jakarta');
                                               echo date('D,d M Y H:i:s', $l->id_pengaduan); ?></small>
-                    <div class="row justify-content-end mt-2 mr-1">
+                      <?php if ($l->status_diterima != null) : ?>
+                        <div class="row justify-content-between align-items-center mt-2 mr-1">
+                        <?php if ($l->status_diterima == "diterima") : ?>
+                          <span class="badge badge-success badge-pill py-3 px-4">
+                            Diterima
+                          </span>
+                        <?php else : ?>
+                          <span class="badge badge-danger badge-pill py-3 px-4">
+                            Ditolak
+                          </span>
+                          <?php endif; ?>
+                        <?php else : ?>
+                        <div class="row justify-content-end align-items-center mt-2 mr-1">
+                      <?php endif; ?>
                       <a href="<?= base_url('laporan/detail/') . md5($l->id_pengaduan); ?>" class="btn btn-info btn-sm"><i class="fa fa-arrow-right"></i></a>
                     </div>
                   </div>

@@ -20,6 +20,7 @@
                                 <tr>
                                     <th>Tanggal Pengaduan</th>
                                     <th>Isi Pengaduan</th>
+                                    <th>Foto</th>
                                     <th>Status</th>
                                     <th>Aksi</th>
                                 </tr>
@@ -29,19 +30,27 @@
                             <strong>
                                 <tr>
                                     <td><?= date('d M Y H:i:s', $p->id_pengaduan); ?></td>
+                                    
                                     <td><?= $p->isi_laporan; ?></td>
+                                    <td><img src="<?= base_url('asset/upload/') . $p->foto; ?>" width="100px"></td>
                                     <td>
-                                        <?php if($p->status == 1): ?>
-                                            Selesai
+                                    <?php if($p->status_diterima == 'ditolak'): ?>
+                                        Ditolak
                                         <?php else: ?>
+                                        <?php if($p->status == 0): ?>
+                                            Menunggu
+                                        <?php elseif($p->status == 1): ?>
                                             Proses
+                                        <?php else: ?>
                                         <?php endif; ?>
+                                        <?php endif; ?>
+                                   
                                     </td>
-                                    <td>
+                                    <td class="d-flex">
                                         <a href="<?= base_url('pengaduan/del_pengaduan/') . $p->id_pengaduan; ?>" 
-                                        class="btn btn-danger btn-sm tombol-hapus"><i class="fa fa-trash"></i></a>
+                                        class="btn btn-danger btn-sm mx-1 tombol-hapus"><i class="fa fa-trash"></i></a>
                                         <a href="<?= base_url('pengaduan/detail/') . md5($p->id_pengaduan); ?>" 
-                                        class="btn btn-primary btn-sm"><i class="fa fa-arrow-right"></i></a>
+                                        class="btn btn-primary btn-sm mx-1"><i class="fa fa-arrow-right"></i></a>
                                     </td>
                                 </tr>
                                 </strong>

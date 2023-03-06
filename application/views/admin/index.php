@@ -2,7 +2,9 @@
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-4 text-gray-800">Dashboard Admin</h1>
+          <h1 class="h3 mb-4 text-gray-800">Dashboard</h1>
+
+
           <div class="row">
             <div class="col-lg-3">
               <div class="card shadow border-left-info">
@@ -90,28 +92,49 @@
               </div>
             <?php endif; ?>
 
-            <h5 class="ml-3 mt-4">Data Pengaduan Terakhir</h5>
-
+            <h5 class="ml-3 mt-4">Data Pengaduan Terbaru</h5>
 
             <div class="col-lg-12">
               <table class="table table-striped table-bordered">
                 <thead class="thead-dark">
                   <tr>
-                    <th>Tanggal pengaduan</th>
-                    <th>Isi Pengaduan</th>
+                      <th>Tanggal</th>
+                      <th>Nama Pelapor</th>
+                      <th>Isi Pengaduan</th>
+                      <th>Foto</th>
+                      <th>Verifikasi</th>
                   </tr>
                 </thead>
                 <tbody>
                   <?php foreach ($pengaduan as $p) { ?>
+                    <?php if ($p->status_diterima == null) : ?>
                     <tr>
                       <td><?= date('D,d M Y H:i:s', $p->id_pengaduan); ?></td>
+                      <td><?= $p->nama; ?></td>
                       <td><?= $p->isi_laporan; ?></td>
+                      <td><img src="<?= base_url('asset/upload/') . $p->foto; ?>" width="100px"></td>
+                      <td>
+                        <?php if ($p->status_diterima == null) : ?>
+                          <a href="<?= base_url('pengaduan/tolak_pengaduan/') . $p->id_pengaduan; ?>" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> Tolak </a>
+                          <a href="<?= base_url('pengaduan/terima_pengaduan/') . $p->id_pengaduan; ?>" class="btn btn-primary btn-sm"><i class="fa fa-arrow-right">Terima</i></a>
+                        <?php else: ?>
+                          <?php if ($p  ->status_diterima == "diterima") : ?>
+                          <span class="badge badge-success badge-pill py-3 px-4">
+                            Diterima
+                          </span>
+                        <?php else : ?>
+                          <span class="badge badge-danger badge-pill py-3 px-4">
+                            Ditolak
+                          </span>
+                          <?php endif; ?>
+                        <?php endif; ?>
+                      </td>
                     </tr>
+                    <?php endif; ?>
                   <?php } ?>
                 </tbody>
               </table>
             </div>
-
 
 
           </div>

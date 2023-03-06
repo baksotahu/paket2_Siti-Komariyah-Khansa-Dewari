@@ -67,8 +67,8 @@
         <thead>
             <tr>
                 <th>Tanggal Laporan</th>
-                <th>NIK</th>
                 <th>Nama Pelapor</th>
+                <th>NIK</th>
                 <th>Isi Laporan</th>
                 <th>Status</th>
             </tr>
@@ -78,16 +78,26 @@
         date_default_timezone_set('Asia/Jakarta');
         foreach($pengaduan as $p){ ?>
             <tr>
-                <td><?= date('d M Y, H:i:s', $p['id_pengaduan']); ?></td>
-                <td><?= $p['nik']; ?></td>
-                <td><?= $p['nama']; ?></td>
-                <td><?= $p['isi_laporan']; ?></td>
-                <td><?php if($p['status'] == 1): ?>Sudah<?php else: ?>Proses<?php endif; ?></td>
+                <td><?= date('d M Y, H:i:s', $p->id_pengaduan); ?></td>
+                <td><?= $p->nama; ?></td>
+                <td><?= $p->nik; ?></td>
+                <td><?= $p->isi_laporan; ?></td>
+                <!-- <td><?= $p->tgl_tanggapan; ?></td> -->
+                <td><?php if($p->status == 0): ?>
+                            Menunggu
+                   <?php elseif($p->status == 1): ?>
+                            Proses
+                   <?php elseif($p->status == 2): ?>
+                            Selesai
+                    <?php else: ?>
+                            Tolak
+                    <?php endif; ?>
+                </td>
             </tr>
         <?php } ?>
         </tbody>
     </table>
     <?php endif; ?>
-    <!-- <h5 class="text-center">UKK_Nia Nur Afisah</h5> -->
+    <h5 class="text-center">UKK_Khansa Dewari</h5>
 </body>
 </html>

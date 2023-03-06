@@ -18,8 +18,8 @@
                                     </div>
                                     <div class="form-group">
                                         <label>No Telp</label>
-                                        <input type="text" name="telp" class="form-control" value="<?= set_value('telp'); ?>">
-                                        <?= form_error('telp','<small class="text-danger">','</small>'); ?>
+                                        <input type="text" name="no_telp" class="form-control" value="<?= set_value('no_telp'); ?>">
+                                        <?= form_error('no_telp','<small class="text-danger">','</small>'); ?>
                                     </div>
                                     <div class="form-group">
                                         <label>Username</label>
@@ -38,15 +38,7 @@
                                         <input type="password" name="repassword" class="form-control">
                                         <?= form_error('repassword','<small class="text-danger">','</small>'); ?>
                                     </div>
-                                    <div class="form-group">
-                                        <label>Level</label>
-                                        <select name="level" class="form-control">
-                                            <option value=""><- Pilih salah satu -></option>
-                                            <option value="1">Admin</option>
-                                            <option value="2">Petugas</option>
-                                        </select>
-                                        <?= form_error('level','<small class="text-danger">','</small>'); ?>
-                                    </div>
+                                  
                                 </div>
                             </div>
                             <a href="<?= base_url('master/petugas'); ?>" class="btn btn-dark"><i class="fa fa-arrow-left"></i> Kembali</a>

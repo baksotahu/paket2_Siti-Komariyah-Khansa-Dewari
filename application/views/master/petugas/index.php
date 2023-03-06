@@ -11,13 +11,14 @@
                     </div>
                     <div class="card shadow">
                         <div class="card-body">
-                            <a href="<?= base_url('master/add_petugas'); ?>" class="btn btn-success mb-3"><i class="fa fa-plus"></i> Tambah Data Petugas</a>
+                            <a href="<?= base_url('master/add_petugas'); ?>" class="btn btn-primary mb-3"><i class="fa fa-plus"></i> Tambah Data Petugas</a>
                             <table class="table table-striped table-bordered" id="myTable">
                                 <thead class="table-info">
                                     <tr>
                                         <th>No</th>
                                         <th>Nama</th>
                                         <th>Username</th>
+                                        <th>No Telp</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -29,6 +30,7 @@
                                             <td><?= $i++; ?></td>
                                             <td><?= $p->nama; ?></td>
                                             <td><?= $p->username; ?></td>
+                                            <td><?= $p->no_telp;?></td>
                                             <td>
                                                 <a href="<?= base_url('master/del_petugas/') . $p->id_admin; ?>" class="btn btn-danger btn-sm tombol-hapus"><i class="fa fa-trash"></i></a>
                                             </td>

@@ -66,19 +66,24 @@
     <table cellspacing="0">
         <thead>
             <tr>
-                <th>NIK</th>
+                <th>No</th>
                 <th>Nama</th>
-                <th>No Telp</th>
+                <th>Username</th>
+                <th>NIK</th>
+               <th>No Telp</th>
                 <th>Status</th>
             </tr>
         </thead>
         <tbody>
         <?php
         date_default_timezone_set('Asia/Jakarta');
+        $i = 1;
         foreach($masyarakat as $m){ ?>
             <tr>
-                <td><?= $m->nik; ?></td>
+                <td><?= $i++;; ?></td>
                 <td><?= $m->nama; ?></td>
+                <td><?= $m->username?></td>
+                <td><?= $m->nik; ?></td>
                 <td><?= $m->no_telp; ?></td>
                 <td><?php if($m->aktif == 1): ?>Aktif<?php else: ?>Nonaktif<?php endif; ?></td>
             </tr>

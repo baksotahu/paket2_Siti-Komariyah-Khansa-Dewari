@@ -51,6 +51,7 @@ class Master extends CI_Controller
 		$data['title'] = 'Management Data Petugas';
 		$data['pengguna'] = $this->db->get_where('tbl_admin', ['username' => $this->session->userdata('username')])->row_array();
 		$data['petugas'] = $this->M_master->getOnlyPetugas();
+		
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/sidebar');
 		$this->load->view('templates/topbar', $data);
@@ -58,10 +59,66 @@ class Master extends CI_Controller
 		$this->load->view('templates/footer');
 	}
 
+	// Halaman Utama Mana Data Admin
+	public function admin()
+	{
+		$data['title'] = 'Management Data Petugas';
+		$data['pengguna'] = $this->db->get_where('tbl_admin', ['username' => $this->session->userdata('username')])->row_array();
+		$data['petugas'] = $this->M_master->getOnlyAdmin();
+		$this->load->view('templates/header', $data);
+		$this->load->view('templates/sidebar');
+		$this->load->view('templates/topbar', $data);
+		$this->load->view('master/admin/index', $data);
+		$this->load->view('templates/footer');
+	}
+
 	// Untuk Menambahkan Data Petugas / Admin
 	public function add_petugas()
 	{
 		$data['title'] = 'Tambah Data Petugas';
+		$data['pengguna'] = $this->db->get_where('tbl_admin', ['username' => $this->session->userdata('username')])->row_array();
+
+		$this->form_validation->set_rules('nama', 'Nama', 'required|trim|min_length[3]', [
+			'required' => 'Nama harus di isi',
+			'min_length' => 'Nama min 3 huruf'
+		]);
+		$this->form_validation->set_rules('no_telp', 'No telp', 'required|trim|min_length[11]|max_length[13]|is_unique[tbl_admin.no_telp]|numeric', [
+			'required' => 'No Telp harus di isi',
+			'min_length' => 'No Telp min 11 angka',
+			'max_length' => 'No Telp max 13 angka',
+			'is_unique' => 'No Telp sudah terdaftar',
+			'numeric' => 'No Telp harus angka'
+		]);
+		$this->form_validation->set_rules('username', 'Username', 'required|trim|min_length[5]|is_unique[tbl_admin.username]', [
+			'required' => 'Username harus di isi',
+			'min_length' => 'Username min 5 karakter',
+			'is_unique' => 'Username sudah terdaftar'
+		]);
+		$this->form_validation->set_rules('password', 'Password', 'required|trim|min_length[5]|matches[repassword]', [
+			'required' => 'Password harus di isi',
+			'min_length' => 'Password min 5 karakter',
+			'matches' => 'Password harus sama dengan Ulangi Password'
+		]);
+		$this->form_validation->set_rules('repassword', 'Ulangi Password', 'required|trim|matches[password]', [
+			'required' => 'Ulangi Password harus di isi',
+			'matches' => 'Ulangi Password harus sama dengan Password'
+		]);
+
+		if ($this->form_validation->run() == false) {
+			$this->load->view('templates/header', $data);
+			$this->load->view('templates/sidebar');
+			$this->load->view('templates/topbar', $data);
+			$this->load->view('master/petugas/add');
+			$this->load->view('templates/footer');
+		} else {
+			$this->M_master->add_petugas();
+		}
+	}
+
+	// Untuk Menambahkan Data Admin
+	public function add_admin()
+	{
+		$data['title'] = 'Tambah Data Admin';
 		$data['pengguna'] = $this->db->get_where('tbl_admin', ['username' => $this->session->userdata('username')])->row_array();
 
 		$this->form_validation->set_rules('nama', 'Nama', 'required|trim|min_length[3]', [
@@ -95,10 +152,10 @@ class Master extends CI_Controller
 			$this->load->view('templates/header', $data);
 			$this->load->view('templates/sidebar');
 			$this->load->view('templates/topbar', $data);
-			$this->load->view('master/petugas/add');
+			$this->load->view('master/admin/add');
 			$this->load->view('templates/footer');
 		} else {
-			$this->M_master->add_petugas();
+			$this->M_master->add_admin();
 		}
 	}
 
@@ -107,4 +164,59 @@ class Master extends CI_Controller
 	{
 		return $this->M_master->del_petugas($id);
 	}
+	public function del_admin($id)
+	{
+		return $this->M_master->del_admin($id);
+	}
+
+	public function add_masyarakat()
+	{
+		$data['title'] = 'Tambah Data Masyarakat';
+		$data['pengguna'] = $this->db->get_where('tbl_admin', ['username' => $this->session->userdata('username')])->row_array();
+		$this->form_validation->set_rules('nama', 'Nama', 'required|trim|min_length[3]', [
+			'required' => 'Nama harus di isi',
+			'min_length' => 'Nama min 3 huruf'
+		]);
+
+		$this->form_validation->set_rules('nik', 'NIK','required|trim|min_length[16]|max_length[16]|numeric|is_unique[tbl_masyarakat.nik]', [
+			'required' => 'NIK harus di isi',
+			'min_length' => 'NIK harus 16 angka',
+			'max_length' => 'NIK harus 16 angka',
+			'is_unique' => 'NIK sudah terdaftar',
+			'numeric' => 'NIK harus angka'
+		]);
+
+		$this->form_validation->set_rules('no_telp', 'No telp', 'required|trim|min_length[11]|max_length[13]|is_unique[tbl_admin.no_telp]|numeric', [
+			'required' => 'No Telp harus di isi',
+			'min_length' => 'No Telp min 11 angka',
+			'max_length' => 'No Telp max 13 angka',
+			'is_unique' => 'No Telp sudah terdaftar',
+			'numeric' => 'No Telp harus angka'
+		]);
+		$this->form_validation->set_rules('username', 'Username', 'required|trim|min_length[5]|is_unique[tbl_admin.username]', [
+			'required' => 'Username harus di isi',
+			'min_length' => 'Username min 5 karakter',
+			'is_unique' => 'Username sudah terdaftar'
+		]);
+		$this->form_validation->set_rules('password', 'Password', 'required|trim|min_length[5]|matches[repassword]', [
+			'required' => 'Password harus di isi',
+			'min_length' => 'Password min 5 karakter',
+			'matches' => 'Password harus sama dengan Ulangi Password'
+		]);
+		$this->form_validation->set_rules('repassword', 'Ulangi Password', 'required|trim|matches[password]', [
+			'required' => 'Ulangi Password harus di isi',
+			'matches' => 'Ulangi Password harus sama dengan Password'
+		]);
+
+		if ($this->form_validation->run() == false) {
+			$this->load->view('templates/header', $data);
+			$this->load->view('templates/sidebar');
+			$this->load->view('templates/topbar', $data);
+			$this->load->view('master/masyarakat/add');
+			$this->load->view('templates/footer');
+		} else {
+			$this->M_master->add_masyarakat();
+		}
+	}
 }
+

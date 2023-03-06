@@ -31,8 +31,9 @@ class Generate extends CI_Controller{
     public function gen_pengaduan(){
         $tglAwal = $this->input->post('tglAwal');
         $tglAkhir = $this->input->post('tglAkhir');
+        $status = $this->input->post('status');
 
-        $data['pengaduan'] = $this->M_generate->getPengaduanByTgl($tglAwal, $tglAkhir);
+        $data['pengaduan'] = $this->M_generate->getPengaduanByTgl($tglAwal, $tglAkhir, $status);
        
        $html = $this->load->view('generate/pengaduan', $data, true);
        $this->to_generate($html, 'Data Laporan Pengaduan');
@@ -49,5 +50,17 @@ class Generate extends CI_Controller{
         $data['petugas'] = $this->M_generate->getPetugasAll();
         $html = $this->load->view('generate/petugas', $data, true);
         $this->to_generate($html, 'Data Petugas');
+    }
+
+public function gen_admin(){
+    $data['petugas'] = $this->M_generate->getAdminAll();
+    $html = $this->load->view('generate/admin', $data, true);
+    $this->to_generate($html, 'Data Admin');
+
+    }
+    public function gen_tanggapan(){
+        $data['tanggapan'] = $this->M_generate->gen_TanggapanAll();
+        $html = $this->load->view('generate/tanggapan',$data, true);
+        $this->to_generate($html,'Data Tanggapan');
     }
 }

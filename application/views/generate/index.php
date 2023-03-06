@@ -17,6 +17,10 @@
                             </thead>
                             <tbody>
                                 <tr>
+                                    <td>Buat Laporan Admin</td>
+                                    <td><a href="<?= base_url('generate/gen_admin'); ?>" target="_blank" class="btn btn-success"><i class="fa fa-download"></i> Generate laporan</a></td>
+                                </tr>
+                                <tr>
                                     <td>Buat Laporan Petugas</td>
                                     <td><a href="<?= base_url('generate/gen_petugas'); ?>" target="_blank" class="btn btn-success"><i class="fa fa-download"></i> Generate laporan</a></td>
                                 </tr>
@@ -26,7 +30,7 @@
                                 </tr>
                                 <tr>
                                     <td>Buat laporan Pengaduan</td>
-                                    <td><button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-filter"></i> Filter Tanggal</button></td>
+                                    <td><button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-filter"></i> Filter Laporan</button></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -66,7 +70,15 @@
                     <input type="date" name="tglAkhir" class="form-control" value="<?= date('Y-m-d'); ?>">
                 </div>
             </div>
-        </div>
+            <div class="col-lg-6">
+            <label>Status</label>
+            <select name="status" class="form-control">
+                        <option value="">Semua</option>
+                        <option value="1">Proses</option>
+                        <option value="2">Selesai</option>
+                      </select>
+                </div>
+           </div>
 
       </div>
       <div class="modal-footer">

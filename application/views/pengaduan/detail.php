@@ -8,7 +8,7 @@
           <div class="row mb-3">
             <div class="col-lg-6">
               <div class="card shadow">
-                <img src="<?= base_url('asset/upload/') . $pengaduan->foto; ?>">
+                <img width="300" class="mx-auto rounded shadow" src="<?= base_url('asset/upload/') . $pengaduan->foto; ?>">
                 <div class="card-body">
                   <p><?= $pengaduan->isi_laporan; ?></p>
                   <hr>
@@ -16,11 +16,21 @@
                   <br>
                   <small>NIK : <?= $pengaduan->nik; ?></small>
                   <br>
-                  <small>Status : <?php if ($pengaduan->status == 1) : ?>Selesai<?php else : ?>Proses<?php endif; ?></small>
+                  <small>Status : <?php if ($pengaduan->status_diterima == 'ditolak') : ?>
+                                        Ditolak
+                                        <?php else : ?>
+                                        <?php if($pengaduan->status == 0): ?>
+                                          Menungggu
+                                        <?php elseif($pengaduan->status == 1): ?>
+                                          Proses
+                                        <?php else: ?>
+                                          Selesai
+                                        <?php endif; ?></small>
+                                        <?php endif; ?></small>
                   <br>
                   <small class="text-muted"><?= date('D,d M Y H:i:s', $pengaduan->id_pengaduan); ?></small>
                   <hr>
-                  <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal"><i class="fa fa-edit"></i> Edit Status</button>
+                  <!-- <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal"><i class="fa fa-edit"></i> Edit Status</button> -->
                 </div>
               </div>
             </div>
@@ -38,7 +48,8 @@
                         <div class="mx-2 my-2">
                           <i class="fa fa-user"> <?= $t->nama; ?></i><br>
                           <?php if ($t->id_admin == $pengguna['id_admin']) : ?>
-                            <a href="<?= base_url('pengaduan/del_tanggapan/') . $t->id_pengaduan . '/' . $t->id_tanggapan; ?>" class="btn btn-danger btn-sm float-right" style="margin-top : -25px;"><i class="fa fa-trash"></i></a>
+                            <a href="<?= base_url('pengaduan/del_tanggapan/') . $t->id_pengaduan . '/' . $t->id_tanggapan; ?>" 
+                            class="btn btn-danger btn-sm float-right" style="margin-top : -25px;"><i class="fa fa-trash"></i></a>
                           <?php endif; ?>
                           <!-- <hr> -->
                           <p><?= $t->tanggapan; ?></p>
@@ -49,12 +60,15 @@
                     <?php } ?>
 
                   <?php endif; ?>
-
                   <hr>
                   <form action="<?= base_url('pengaduan/add_tanggapan/') . $pengaduan->id_pengaduan; ?>" method="post">
                     <?= form_error('tanggapan', '<small class="text-danger">', '</small>'); ?>
                     <textarea name="tanggapan" rows="3" class="form-control" placeholder="Tambahkan tanggapan" required></textarea>
-                    <button type="submit" class="btn btn-success btn-sm mt-2"><i class="fa fa-paper-plane"></i> Kirim</button>
+                    <div class="d-flex justify-content-start mt-3">
+                      <a href="<?= base_url('pengaduan') ?>" class="btn mr-1 btn-secondary btn-sm mt-2"><i class="fa fa-arrow-left"></i> Kembali</a>
+                      <button type="button" class="btn mr-1 btn-primary btn-sm mt-2" data-toggle="modal" data-target="#modal"><i class="fa fa-edit"></i> Edit Status</button>
+                      <button type="submit" class="btn mr-1 btn-primary btn-sm mt-2"><i class="fa fa-paper-plane"></i> Kirim</button>
+                    </div>
                   </form>
                 </div>
               </div>
@@ -87,8 +101,10 @@
                     <label class="col-sm-3">Status Pengaduan : </label>
                     <div class="col-sm-9">
                       <select name="status" class="form-control">
-                        <option value="1">Selesai</option>
-                        <option value="0">Proses</option>
+                        <option value="0">Menunggu</option>
+                        <option value="1">Proses</option>
+                        <option value="2">Selesai</option>
+                        
                       </select>
                     </div>
                   </div>

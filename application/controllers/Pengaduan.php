@@ -53,10 +53,24 @@ class Pengaduan extends CI_Controller{
         }
     }
 
-
     public function del_tanggapan($id_pengaduan, $id_tanggapan){
        return $this->M_pengaduan->del_tanggapan($id_pengaduan, $id_tanggapan);
     }
+
+    public function terima_pengaduan($id_pengaduan){
+        $this->db->set('status_diterima','diterima')
+        ->where('id_pengaduan',$id_pengaduan)
+        ->update('tbl_pengaduan');
+        redirect('admin/index');
+    }
+
+    public function tolak_pengaduan($id_pengaduan){
+        $this->db->set('status_diterima','ditolak')
+        ->where('id_pengaduan',$id_pengaduan)
+        ->update('tbl_pengaduan');
+        redirect('admin/index');
+    }
+
 
     public function del_pengaduan($id){
         return $this->M_pengaduan->del_pengaduan($id);

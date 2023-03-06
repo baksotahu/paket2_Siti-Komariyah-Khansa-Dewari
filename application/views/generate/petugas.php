@@ -70,6 +70,7 @@
                 <tr>
                     <th>No</th>
                     <th>Nama</th>
+                    <th>Username</th>
                     <th>No Telp</th>
                 </tr>
             </thead>
@@ -81,6 +82,7 @@
                     <tr>
                         <td><?= $i++;; ?></td>
                         <td><?= $p->nama; ?></td>
+                        <td><?= $p->username?></td>
                         <td><?= $p->no_telp; ?></td>
 
                     </tr>

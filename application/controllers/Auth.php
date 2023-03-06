@@ -52,15 +52,21 @@ class Auth extends CI_Controller
 						$this->session->set_userdata($data);
 						redirect('user');
 					} else {
-						$this->session->set_flashdata('false', 'Akun sudah tidak aktif');
+						$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
+						Akun sudah tidak aktif
+						</div>');
 						redirect('auth');
 					}
 				} else {
-					$this->session->set_flashdata('false', 'Password salah');
+					$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
+					Password salah
+					</div>');
 					redirect('auth');
 				}
 			} else {
-				$this->session->set_flashdata('false', 'Password salah');
+				$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
+				Password salah
+				</div>');
 				redirect('auth');
 			}
 		} elseif ($masyarakat) {
@@ -73,15 +79,21 @@ class Auth extends CI_Controller
 					$this->session->set_userdata($data);
 					redirect('user');
 				} else {
-					$this->session->set_flashdata('false', 'Akun sudah tidak aktif');
+					$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
+					Akun sudah tidak aktif
+					</div>');
 					redirect('auth');
 				}
 			} else {
-				$this->session->set_flashdata('false', 'Password salah');
+				$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
+				Password salah
+				</div>');
 				redirect('auth');
 			}
 		} else {
-			$this->session->set_flashdata('false', 'Username tidak terdaftar');
+			$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
+			Username tidak terdaftar
+			</div>');
 			redirect('auth');
 		}
 	}
@@ -156,10 +168,14 @@ class Auth extends CI_Controller
 		];
 
 		if ($this->db->insert('tbl_masyarakat', $data)) {
-			$this->session->set_flashdata('true', 'Akun baru berhasil dibuat, silahkan login');
+			$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
+			Akun baru berhasil dibuat, silahkan login
+			</div>');
 			redirect('auth');
 		} else {
-			$this->session->set_flashdata('false', 'Akun baru gagal di buat, silahkan coba kembali');
+			$this->session->set_flashdata('message', ',div class="alert alert-danger" role="alert">
+			Akun baru gagal di buat, silahkan coba kembali
+			</div>');
 			redirect('auth/register');
 		}
 	}
